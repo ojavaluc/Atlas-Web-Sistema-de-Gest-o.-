@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlas Web Sistemas - Painel de Controle</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Ícones do FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
+    <!-- Fundo escuro para celular quando o menu abre -->
+    <div id="overlay" class="overlay" onclick="fecharMenu()"></div>
+
     <!-- Menu Lateral -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="logo-area">
             <h2><i class="fa-solid fa-earth-americas"></i> ATLAS WEB</h2>
         </div>
@@ -28,9 +30,15 @@
     <!-- Conteúdo Principal -->
     <main class="main-content">
         <header class="topbar">
-            <h1>Atlas Web Sistemas</h1>
+            <div class="topbar-left">
+                <!-- Botão Menu Celular -->
+                <button class="btn-menu" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>Atlas Web</h1>
+            </div>
             <div class="user-profile">
-                <span>Gestor Operacional</span>
+                <span class="user-name">Gestor Operacional</span>
                 <i class="fa-solid fa-circle-user"></i>
             </div>
         </header>
@@ -39,24 +47,24 @@
         <div id="dashboard" class="aba-conteudo" style="display: block;">
             <section class="cards-container">
                 <div class="card">
-                    <h3>Equipamentos em Operação</h3>
+                    <h3>Equipamentos</h3>
                     <p class="number">12</p>
                 </div>
                 <div class="card">
-                    <h3>Avisos de Manutenção</h3>
+                    <h3>Manutenção</h3>
                     <p class="number alert">2</p>
                 </div>
                 <div class="card">
-                    <h3>Consumo Diesel (Mês)</h3>
+                    <h3>Diesel (Mês)</h3>
                     <p class="number">4.500 L</p>
                 </div>
             </section>
 
             <section class="table-section">
                 <div class="table-header">
-                    <h2>Últimas Despesas de Viagem e Campo</h2>
+                    <h2>Últimas Despesas</h2>
                     <button id="btnExportar" class="btn-primary">
-                        <i class="fa-solid fa-file-csv"></i> Exportar CSV
+                        <i class="fa-solid fa-file-csv"></i> Exportar
                     </button>
                 </div>
                 
@@ -66,9 +74,9 @@
                             <tr>
                                 <th>Data</th>
                                 <th>Funcionário</th>
-                                <th>Equipamento/Veículo</th>
+                                <th>Equipamento</th>
                                 <th>Categoria</th>
-                                <th>Valor / Litros</th>
+                                <th>Valor</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -85,7 +93,7 @@
                                 <td>27/09/2026</td>
                                 <td>Marcos Paulo</td>
                                 <td>Chevrolet Astra</td>
-                                <td>Alimentação (Viagem)</td>
+                                <td>Alimentação</td>
                                 <td>R$ 45,00</td>
                                 <td><span class="badge badge-warning">Pendente</span></td>
                             </tr>
@@ -93,7 +101,7 @@
                                 <td>26/09/2026</td>
                                 <td>Adão Pinheiro</td>
                                 <td>Trator Esteira D6</td>
-                                <td>Manutenção (Filtro)</td>
+                                <td>Manutenção</td>
                                 <td>R$ 320,00</td>
                                 <td><span class="badge badge-success">Aprovado</span></td>
                             </tr>
@@ -107,13 +115,11 @@
         <div id="funcionarios" class="aba-conteudo" style="display: none;">
             <section class="table-section">
                 <div class="table-header">
-                    <h2>Cadastro de Funcionários</h2>
-                    <button class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> Novo Funcionário
-                    </button>
+                    <h2>Funcionários</h2>
+                    <button class="btn-primary"><i class="fa-solid fa-plus"></i> Novo</button>
                 </div>
                 <div class="table-responsive">
-                    <p style="padding: 20px; color: #666;">Interface de listagem e ficha de funcionários (altura, peso, botina, etc) será construída aqui.</p>
+                    <p style="padding: 20px; color: #666;">Ficha de funcionários será construída aqui.</p>
                 </div>
             </section>
         </div>
@@ -122,13 +128,11 @@
         <div id="equipamentos" class="aba-conteudo" style="display: none;">
             <section class="table-section">
                 <div class="table-header">
-                    <h2>Cadastro de Maquinário Pesado</h2>
-                    <button class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> Novo Equipamento
-                    </button>
+                    <h2>Maquinário Pesado</h2>
+                    <button class="btn-primary"><i class="fa-solid fa-plus"></i> Novo</button>
                 </div>
                 <div class="table-responsive">
-                    <p style="padding: 20px; color: #666;">Controle de Escavadeiras, Tratores, Horímetros e Manutenções Preventivas.</p>
+                    <p style="padding: 20px; color: #666;">Controle de Escavadeiras, Tratores, etc.</p>
                 </div>
             </section>
         </div>
@@ -138,12 +142,10 @@
             <section class="table-section">
                 <div class="table-header">
                     <h2>Frota de Apoio</h2>
-                    <button class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> Novo Veículo
-                    </button>
+                    <button class="btn-primary"><i class="fa-solid fa-plus"></i> Novo</button>
                 </div>
                 <div class="table-responsive">
-                    <p style="padding: 20px; color: #666;">Controle de Caminhões, Picapes, Quilometragem e Abastecimento.</p>
+                    <p style="padding: 20px; color: #666;">Controle de Caminhões e Picapes.</p>
                 </div>
             </section>
         </div>
@@ -152,13 +154,11 @@
         <div id="lancamentos" class="aba-conteudo" style="display: none;">
             <section class="table-section">
                 <div class="table-header">
-                    <h2>Apontamentos e Despesas</h2>
-                    <button class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> Novo Lançamento
-                    </button>
+                    <h2>Apontamentos</h2>
+                    <button class="btn-primary"><i class="fa-solid fa-plus"></i> Novo</button>
                 </div>
                 <div class="table-responsive">
-                    <p style="padding: 20px; color: #666;">Módulo para o funcionário preencher despesas de viagem e abastecimento em campo.</p>
+                    <p style="padding: 20px; color: #666;">Módulo para despesas de viagem e abastecimento.</p>
                 </div>
             </section>
         </div>
@@ -168,12 +168,10 @@
             <section class="table-section">
                 <div class="table-header">
                     <h2>Almoxarifado e EPIs</h2>
-                    <button class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> Registrar Entrada
-                    </button>
+                    <button class="btn-primary"><i class="fa-solid fa-plus"></i> Entrada</button>
                 </div>
                 <div class="table-responsive">
-                    <p style="padding: 20px; color: #666;">Controle de estoque de uniformes, botinas, óculos e ferramentas da empresa.</p>
+                    <p style="padding: 20px; color: #666;">Controle de uniformes e ferramentas.</p>
                 </div>
             </section>
         </div>
