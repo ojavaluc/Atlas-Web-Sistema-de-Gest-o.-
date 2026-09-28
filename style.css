@@ -1,8 +1,7 @@
-/* Paleta de Cores Atlas Web */
 :root {
-    --bg-color: #F0F4F8; /* Fundo claro */
-    --sidebar-bg: #0A192F; /* Azul bem escuro corporativo */
-    --primary-blue: #1D4ED8; /* Azul principal para botões */
+    --bg-color: #F0F4F8;
+    --sidebar-bg: #0A192F;
+    --primary-blue: #1D4ED8;
     --hover-blue: #2563EB;
     --text-dark: #1E293B;
     --text-light: #94A3B8;
@@ -22,6 +21,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-dark);
     height: 100vh;
+    overflow: hidden; /* Evita rolagem dupla */
 }
 
 /* Sidebar */
@@ -31,6 +31,7 @@ body {
     color: var(--white);
     display: flex;
     flex-direction: column;
+    z-index: 1000;
 }
 
 .logo-area {
@@ -81,6 +82,21 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border-color);
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-menu {
+    display: none; /* Escondido no PC */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
 }
 
 .user-profile {
@@ -138,6 +154,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .table-header h2 {
@@ -163,12 +181,14 @@ body {
 }
 
 .table-responsive {
-    overflow-x: auto;
+    overflow-x: auto; /* Permite rolar a tabela pro lado no celular */
+    width: 100%;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px; /* Garante que a tabela não esprema demais */
 }
 
 th, td {
@@ -183,7 +203,6 @@ th {
     font-size: 0.9rem;
 }
 
-/* Badges de Status */
 .badge {
     padding: 5px 10px;
     border-radius: 12px;
@@ -192,3 +211,61 @@ th {
 }
 .badge-success { background-color: #D1FAE5; color: #065F46; }
 .badge-warning { background-color: #FEF3C7; color: #92400E; }
+
+/* Overlay (Fundo escuro do celular) */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+/* =========================================
+   RESPONSIVIDADE (Telas de Celular)
+   ========================================= */
+@media (max-width: 768px) {
+    .btn-menu {
+        display: block; /* Mostra o botão hambúrguer */
+    }
+
+    .topbar {
+        padding: 15px 20px;
+    }
+
+    .user-name {
+        display: none; /* Esconde o texto "Gestor Operacional" pra caber na tela */
+    }
+
+    /* Esconde a barra lateral puxando pra fora da tela */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px; 
+        height: 100vh;
+        transition: left 0.3s ease;
+    }
+
+    /* Classe que o JS adiciona para mostrar o menu */
+    .sidebar.aberto {
+        left: 0;
+    }
+
+    .overlay.ativo {
+        display: block;
+    }
+
+    .cards-container {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .table-section {
+        margin: 0 20px 20px 20px;
+        padding: 15px;
+    }
+}
